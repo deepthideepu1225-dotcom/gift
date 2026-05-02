@@ -3,15 +3,13 @@
 <head>
   <title>For My Bangaram 💖</title>
 
-  <!-- Confetti Library -->
-  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-
   <style>
     body {
       font-family: Arial;
       text-align: center;
       background: linear-gradient(to right, #ff9a9e, #fad0c4);
       padding: 40px;
+      overflow:hidden;
     }
 
     .box { display:none; }
@@ -38,24 +36,38 @@
       margin-top: 20px;
     }
 
-    /* Bounce animation */
+    /* CAKE BOUNCE */
     .bounce {
       animation: bounce 1s infinite;
     }
 
     @keyframes bounce {
       0%,100% { transform: translateY(0); }
-      50% { transform: translateY(-20px); }
+      50% { transform: translateY(-25px); }
     }
 
-    /* Pop text */
+    /* TEXT POP */
     .pop {
-      animation: pop 0.6s ease;
+      animation: pop 0.5s ease;
     }
 
     @keyframes pop {
       from { transform: scale(0.5); opacity:0; }
       to { transform: scale(1); opacity:1; }
+    }
+
+    /* SIMPLE CONFETTI */
+    .confetti {
+      position: fixed;
+      width: 10px;
+      height: 10px;
+      background: red;
+      top: -10px;
+      animation: fall 3s linear infinite;
+    }
+
+    @keyframes fall {
+      to { transform: translateY(100vh); }
     }
 
   </style>
@@ -91,10 +103,9 @@
   <p>Many more happy returns of the day 🎂</p>
 </div>
 
-<!-- LETTER OPEN -->
+<!-- LETTER -->
 <div id="p5" class="box">
-  <h2>💌 Open Letter</h2>
-  <button onclick="next(6)">Open 💌</button>
+  <button onclick="next(6)">Open Letter 💌</button>
 </div>
 
 <!-- CHOOSE -->
@@ -107,27 +118,18 @@
 
 <!-- LETTER 1 -->
 <div id="p7" class="box">
-  <p>
-  Many more happy returns of the day bangaram ❤️<br><br>
-  Hope you lead your life successfully with your loved ones<br>
-  Adhe nene ayithe baguntadi 🥲
-  </p>
+  <p>Many more happy returns of the day bangaram ❤️</p>
 </div>
 
 <!-- LETTER 2 -->
 <div id="p8" class="box">
-  <p>
-  I never knew a spontaneous decision could change my life…<br>
-  life lo kotha kotha experiences ichav…<br><br>
-  Love you bangaram ❤️
-  </p>
+  <p>Love you bangaram ❤️</p>
 </div>
 
 <!-- PROPOSAL -->
 <div id="p9" class="box">
-  <h2>💍 Will you marry me?</h2>
-  <input type="text" id="ans" placeholder="Type Yes">
-  <br>
+  <h2>Will you marry me?</h2>
+  <input id="ans">
   <button onclick="final()">Submit</button>
 </div>
 
@@ -147,16 +149,14 @@ function next(n){show("p"+n)}
 
 function blow(){
   show("p4");
-  confetti(); // 🎉 confetti blast
+  createConfetti();
 }
 
 function final(){
   let a=document.getElementById("ans").value.toLowerCase();
   if(a==="yes"){
     show("p10");
-    confetti();
-  } else {
-    alert("Only Yes allowed");
+    createConfetti();
   }
 }
 
@@ -164,6 +164,16 @@ function show(id){
   let pages=document.querySelectorAll(".box, .active");
   pages.forEach(p=>p.classList.remove("active"));
   document.getElementById(id).classList.add("active");
+}
+
+function createConfetti(){
+  for(let i=0;i<30;i++){
+    let c=document.createElement("div");
+    c.className="confetti";
+    c.style.left=Math.random()*100+"vw";
+    c.style.backgroundColor=`hsl(${Math.random()*360},100%,50%)`;
+    document.body.appendChild(c);
+  }
 }
 </script>
 
